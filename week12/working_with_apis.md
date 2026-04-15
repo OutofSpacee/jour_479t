@@ -19,7 +19,6 @@ Additionally, with an API you can request only the information you need. Instead
 
 API parameters refer to pieces of information you include in a URL to an API endpoint to customize what data you will get back. 
 
-
 ## Pulling data from someone else's API
 To access data from an API, you will likely need an API key. 
 
