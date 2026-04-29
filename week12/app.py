@@ -102,6 +102,8 @@ def get_salaries(): # function that runs when this endpoint is accessed
         df = df[df['Appt Base Annual Salary'] <= max_salary]
     
     # return the result after this filtering
+    # limit to 100 results to keep responses fast
+    df = df.head(100)
     return jsonify({
         # return the total number of rows after filtering
         'count': len(df),
@@ -138,7 +140,9 @@ def search_by_name():  # function that runs when this endpoint is accessed
      # case=False makes it case-insensitive
      # na=False prevents errors if there are missing values
     df = salary_data[salary_data['Primary Name'].str.contains(name, case=False, na=False)]
-    
+    # limit to 100 results to keep responses fast
+    df = df.head(100)
+
     # return results as JSON
     return jsonify({
         # return count of total rows 
@@ -169,6 +173,8 @@ def top_earners():
     # if there is nothing after ?n=, default to 10
     # ensure n is an integer
     n = request.args.get('n', default=10, type=int)
+    # cap n at 100 to avoid huge responses
+    n = min(n, 100)
     # filter our salary data to the largest N salaries
     df = salary_data.nlargest(n, 'Appt Base Annual Salary')
     
